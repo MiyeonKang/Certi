@@ -78,21 +78,38 @@ void banUser(int mUser) {
 int list[MAX];
 void sortByScore() {
 	register int i = 0;
+	memset(list, 0, sizeof(list));
 	for (map<string, App*>::iterator iter = m.begin(); iter != m.end(); ++iter){
 		list[i++] = iter->second->idx;
 	}
-	nth_element(list, list + 5, list + i, [&](int a, int b) {
-	if (A[a].average != A[b].average) return A[a].average > A[b].average;
-	return (string)A[a].name < (string)A[b].name;});
-
-	//sort(list, list + i, [&](int a, int b) {
-	//	if (A[a].average != A[b].average) return A[a].average > A[b].average;
-	//	return (string)A[a].name < (string)A[b].name; });
-
+	if(i > 5){
+		nth_element(list, list + 5, list + i, [&](int a, int b) {
+			if (A[a].average != A[b].average) return A[a].average > A[b].average;
+			return (string)A[a].name < (string)A[b].name;});
+	}
+	else{
+		sort(list, list + i, [&](int a, int b) {
+			if (A[a].average != A[b].average) return A[a].average > A[b].average;
+			return (string)A[a].name < (string)A[b].name; });
+	}
 }
 
 void sortByNumber() {
-
+	register int i = 0;
+	memset(list, 0, sizeof(list));
+	for (map<string, App*>::iterator iter = m.begin(); iter != m.end(); ++iter) {
+		list[i++] = iter->second->idx;
+	}
+	if (i > 5) {
+		nth_element(list, list + 5, list + i, [&](int a, int b) {
+			if (A[a].cnt != A[b].cnt) return A[a].cnt > A[b].cnt;
+			return (string)A[a].name < (string)A[b].name; });
+	}
+	else {
+		sort(list, list + i, [&](int a, int b) {
+			if (A[a].cnt != A[b].cnt) return A[a].cnt > A[b].cnt;
+			return (string)A[a].name < (string)A[b].name; });
+	}
 }
 
 int main() {
